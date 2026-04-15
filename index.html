@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Avisos | Madeira</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:Arial,sans-serif}
+body{display:inline-block;padding:0}
+.map-widget{width:100px;background:#fff;border:1px solid #ccc;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-decoration:none;}
+.map-widget:hover{filter:brightness(0.96)}
+.map-title{font-size:6px;font-weight:700;color:#000;text-align:center;padding:2px 2px 1px;border-bottom:1px solid #e0e0e0;line-height:1.2;flex-shrink:0;}
+.map-area{display:flex;align-items:center;justify-content:center;padding:3px 3px 1px;}
+.map-area svg{width:94px;height:auto;}
+.map-legend{display:flex;flex-direction:column;gap:1px;padding:2px 4px 2px;}
+.legend-row{display:flex;align-items:center;gap:3px;font-size:5px;color:#333;}
+.legend-dot{width:6px;height:6px;border-radius:1px;flex-shrink:0;border:0.5px solid rgba(0,0,0,0.2);}
+.fonte{font-size:5px;color:#666;text-align:right;padding:1px 3px 2px;}
+</style>
+</head>
+<body>
+<a class="map-widget" href="https://iamnunocaldeira.github.io/ipma-avisos-madeira/" target="_blank" rel="noopener">
+  <div class="map-title">Avisos Meteorológicos — Madeira</div>
+  <div class="map-area">
+    <svg id="madeira-map" viewBox="0 0 200 82" xmlns="http://www.w3.org/2000/svg">
+      <!-- Costa Norte -->
+      <path id="reg-MCN"
+        d="M 6.9,20.6 L 23.8,15.4 L 38.9,12.8 L 57.7,10.2 L 72.7,10.2 L 89.7,12.8 L 104.7,15.4 L 117.9,18.0 L 132.9,18.0 L 148.0,20.6 L 163.0,23.1 L 174.3,25.7 L 183.7,28.3 L 193.1,33.5 L 195.0,41.3 L 180.0,36.1 L 151.7,30.9 L 114.1,27.0 L 76.5,24.4 L 38.9,24.4 L 6.9,29.6 Z"
+        fill="#e0e0e0" stroke="#fff" stroke-width="0.6"/>
+      <!-- Regiões Montanhosas -->
+      <path id="reg-MRM"
+        d="M 6.9,29.6 L 38.9,24.4 L 76.5,24.4 L 114.1,27.0 L 151.7,30.9 L 180.0,36.1 L 195.0,41.3 L 193.1,49.1 L 180.0,58.1 L 151.7,62.0 L 114.1,63.3 L 76.5,60.7 L 38.9,55.6 L 6.9,49.1 Z"
+        fill="#e0e0e0" stroke="#fff" stroke-width="0.6"/>
+      <!-- Costa Sul -->
+      <path id="reg-MCS"
+        d="M 6.9,49.1 L 38.9,55.6 L 76.5,60.7 L 114.1,63.3 L 151.7,62.0 L 180.0,58.1 L 193.1,49.1 L 183.7,56.9 L 174.3,59.4 L 163.0,62.0 L 148.0,67.2 L 132.9,69.8 L 117.9,69.8 L 104.7,69.8 L 89.7,69.8 L 76.5,69.8 L 61.4,69.8 L 48.3,67.2 L 33.2,64.6 L 20.0,62.0 L 10.6,56.9 Z"
+        fill="#e0e0e0" stroke="#fff" stroke-width="0.6"/>
+      <!-- Porto Santo -->
+      <ellipse cx="185" cy="5" rx="9" ry="3.5" fill="#d5d5d5" stroke="#fff" stroke-width="0.5"/>
+      <text x="185" y="6.2" text-anchor="middle" font-size="3" fill="#555" font-family="Arial">P. Santo</text>
+      <!-- Labels -->
+      <text id="lbl-MCN" x="100" y="21" text-anchor="middle" font-size="4.5" font-weight="bold" fill="#333" font-family="Arial">Costa Norte</text>
+      <text id="lbl-MRM" x="100" y="44" text-anchor="middle" font-size="4.5" font-weight="bold" fill="#333" font-family="Arial">R. Montanhosas</text>
+      <text id="lbl-MCS" x="98"  y="63" text-anchor="middle" font-size="4.5" font-weight="bold" fill="#333" font-family="Arial">Costa Sul</text>
+    </svg>
+  </div>
+  <div class="map-legend" id="legend"></div>
+  <div class="fonte">Fonte: IPMA</div>
+</a>
+<script>
+const REGIONS={MCN:'Costa Norte',MRM:'R. Montanhosas',MCS:'Costa Sul'};
+const LVL={red:4,orange:3,yellow:2,green:1};
+const COLORS={red:'#e53935',orange:'#ff8c00',yellow:'#fdd835',green:'#4caf50',none:'#e0e0e0'};
+const TEXT_COLOR={red:'#fff',orange:'#111',yellow:'#111',green:'#111',none:'#555'};
+
+function normLevel(l){return(l||'green').toLowerCase()}
+
+function maxLevel(code,data){
+  let max='none';
+  data.forEach(w=>{
+    if(w.idAreaAviso!==code)return;
+    const lv=normLevel(w.awarenessLevelID);
+    if(lv==='green'&&max==='none'){max='green';return;}
+    if((LVL[lv]||0)>(LVL[max]||0))max=lv;
+  });
+  return max;
+}
+
+function buildLegend(levels){
+  document.getElementById('legend').innerHTML=Object.entries(REGIONS).map(([code,name])=>{
+    const color=COLORS[levels[code]]||COLORS.none;
+    return`<div class="legend-row"><div class="legend-dot" style="background:${color}"></div><span>${name}</span></div>`;
+  }).join('');
+}
+
+async function load(){
+  try{
+    const res=await fetch('https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json');
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    const levels={};
+    Object.keys(REGIONS).forEach(code=>{levels[code]=maxLevel(code,data);});
+    Object.entries(levels).forEach(([code,lv])=>{
+      const p=document.getElementById('reg-'+code);
+      const l=document.getElementById('lbl-'+code);
+      if(p)p.setAttribute('fill',COLORS[lv]||COLORS.none);
+      if(l)l.setAttribute('fill',TEXT_COLOR[lv]||'#333');
+    });
+    buildLegend(levels);
+    if(window.parent!==window)window.parent.postMessage({type:'resize',height:document.body.scrollHeight},'*');
+  }catch(e){console.error(e);}
+}
+load();
+setInterval(load,10*60*1000);
+</script>
+</body>
+</html>
