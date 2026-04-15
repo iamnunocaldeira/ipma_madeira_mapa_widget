@@ -8,70 +8,92 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{background:transparent;font-family:Arial,sans-serif}
 body{display:inline-block;padding:0}
-.map-widget{width:100px;background:#fff;border:1px solid #ccc;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-decoration:none;}
+.map-widget{
+  width:140px;background:#fff;border:1px solid #ccc;border-radius:4px;
+  overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-decoration:none;
+}
 .map-widget:hover{filter:brightness(0.96)}
-.map-title{font-size:6px;font-weight:700;color:#000;text-align:center;padding:2px 2px 1px;border-bottom:1px solid #e0e0e0;line-height:1.2;flex-shrink:0;}
-.map-area{display:flex;align-items:center;justify-content:center;padding:3px 3px 1px;}
-.map-area svg{width:94px;height:auto;}
-.map-legend{display:flex;flex-direction:column;gap:1px;padding:2px 4px 2px;}
-.legend-row{display:flex;align-items:center;gap:3px;font-size:5px;color:#333;}
-.legend-dot{width:6px;height:6px;border-radius:1px;flex-shrink:0;border:0.5px solid rgba(0,0,0,0.2);}
-.fonte{font-size:5px;color:#666;text-align:right;padding:1px 3px 2px;}
+.map-title{
+  font-size:7px;font-weight:700;color:#000;text-align:center;
+  padding:3px 2px 2px;border-bottom:1px solid #e0e0e0;line-height:1.3;flex-shrink:0;
+}
+.map-area{display:flex;align-items:center;justify-content:center;padding:5px 4px 2px;}
+.map-area svg{width:128px;height:auto;}
+.map-legend{
+  display:grid;grid-template-columns:1fr 1fr;gap:2px 6px;padding:3px 6px 3px;
+}
+.legend-row{display:flex;align-items:center;gap:3px;font-size:6px;color:#333;}
+.legend-dot{width:7px;height:7px;border-radius:1px;flex-shrink:0;border:0.5px solid rgba(0,0,0,0.2);}
+.fonte{font-size:5.5px;color:#666;text-align:right;padding:1px 4px 3px;}
 </style>
 </head>
 <body>
 <a class="map-widget" href="https://iamnunocaldeira.github.io/ipma-avisos-madeira/" target="_blank" rel="noopener">
   <div class="map-title">Avisos Meteorológicos — Madeira</div>
   <div class="map-area">
-    <svg id="madeira-map" viewBox="0 0 200 82" xmlns="http://www.w3.org/2000/svg">
+    <svg id="madeira-map" viewBox="20 5 215 82" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Agitação Marítima Norte -->
+      <path id="reg-AM-N"
+        d="M 48.4,18.3 L 55.5,13.0 L 62.6,13.0 L 69.7,7.7 L 76.8,7.7 L 83.9,7.7 L 91.0,10.3 L 98.1,18.3 L 105.2,18.3 L 112.3,21.0 L 119.4,23.7 L 126.5,23.7 L 133.5,23.7 L 140.6,21.0 L 147.7,18.3 L 154.8,21.0 L 161.9,23.7 L 169.0,23.7 L 176.1,26.3 L 183.2,31.7 L 190.3,34.3 L 197.4,37.0 L 204.5,37.0 L 211.6,39.7 L 218.7,42.3 L 225.8,42.3 L 229.4,45.0 L 222.3,45.0 L 215.2,42.3 L 208.1,42.3 L 201.0,39.7 L 193.9,39.7 L 186.8,37.0 L 179.7,31.7 L 172.6,26.3 L 165.5,26.3 L 158.4,23.7 L 151.3,23.7 L 144.2,21.0 L 137.1,23.7 L 130.0,26.3 L 122.9,26.3 L 115.8,26.3 L 108.7,23.7 L 101.6,21.0 L 94.5,18.3 L 87.4,15.7 L 80.3,13.0 L 73.2,13.0 L 66.1,13.0 L 59.0,18.3 L 51.9,21.0 Z"
+        fill="#ccc" stroke="#ccc" stroke-width="1.2" stroke-linejoin="round"/>
+
       <!-- Costa Norte -->
       <path id="reg-MCN"
-        d="M 6.9,20.6 L 23.8,15.4 L 38.9,12.8 L 57.7,10.2 L 72.7,10.2 L 89.7,12.8 L 104.7,15.4 L 117.9,18.0 L 132.9,18.0 L 148.0,20.6 L 163.0,23.1 L 174.3,25.7 L 183.7,28.3 L 193.1,33.5 L 195.0,41.3 L 180.0,36.1 L 151.7,30.9 L 114.1,27.0 L 76.5,24.4 L 38.9,24.4 L 6.9,29.6 Z"
-        fill="#e0e0e0" stroke="#fff" stroke-width="0.6"/>
+        d="M 48.4,26.3 L 55.5,23.7 L 62.6,18.3 L 69.7,15.7 L 76.8,15.7 L 83.9,15.7 L 91.0,21.0 L 98.1,23.7 L 105.2,26.3 L 112.3,29.0 L 119.4,29.0 L 126.5,29.0 L 133.5,29.0 L 140.6,26.3 L 147.7,26.3 L 154.8,26.3 L 161.9,26.3 L 169.0,29.0 L 176.1,31.7 L 183.2,37.0 L 190.3,42.3 L 197.4,42.3 L 204.5,45.0 L 211.6,45.0 L 218.7,47.7 L 225.8,47.7 L 229.4,47.7 L 222.3,47.7 L 215.2,45.0 L 208.1,50.3 L 201.0,50.3 L 193.9,50.3 L 186.8,50.3 L 179.7,45.0 L 172.6,39.7 L 165.5,37.0 L 158.4,37.0 L 151.3,39.7 L 144.2,39.7 L 137.1,39.7 L 130.0,37.0 L 122.9,37.0 L 115.8,34.3 L 108.7,34.3 L 101.6,31.7 L 94.5,29.0 L 87.4,26.3 L 80.3,21.0 L 73.2,23.7 L 66.1,23.7 L 59.0,29.0 L 51.9,29.0 Z"
+        fill="#ccc" stroke="#ccc" stroke-width="1.2" stroke-linejoin="round"/>
+
       <!-- Regiões Montanhosas -->
       <path id="reg-MRM"
-        d="M 6.9,29.6 L 38.9,24.4 L 76.5,24.4 L 114.1,27.0 L 151.7,30.9 L 180.0,36.1 L 195.0,41.3 L 193.1,49.1 L 180.0,58.1 L 151.7,62.0 L 114.1,63.3 L 76.5,60.7 L 38.9,55.6 L 6.9,49.1 Z"
-        fill="#e0e0e0" stroke="#fff" stroke-width="0.6"/>
+        d="M 66.1,31.7 L 73.2,26.3 L 80.3,26.3 L 87.4,31.7 L 94.5,34.3 L 101.6,37.0 L 108.7,39.7 L 115.8,39.7 L 122.9,39.7 L 130.0,42.3 L 137.1,42.3 L 144.2,42.3 L 151.3,42.3 L 158.4,42.3 L 165.5,42.3 L 172.6,45.0 L 179.7,47.7 L 186.8,53.0 L 186.8,55.7 L 179.7,61.0 L 172.6,63.7 L 165.5,66.3 L 158.4,61.0 L 151.3,61.0 L 144.2,61.0 L 137.1,61.0 L 130.0,61.0 L 122.9,58.3 L 115.8,58.3 L 108.7,55.7 L 101.6,53.0 L 94.5,47.7 L 87.4,45.0 L 80.3,42.3 L 73.2,39.7 L 66.1,34.3 Z"
+        fill="#ccc" stroke="#ccc" stroke-width="1.2" stroke-linejoin="round"/>
+
       <!-- Costa Sul -->
       <path id="reg-MCS"
-        d="M 6.9,49.1 L 38.9,55.6 L 76.5,60.7 L 114.1,63.3 L 151.7,62.0 L 180.0,58.1 L 193.1,49.1 L 183.7,56.9 L 174.3,59.4 L 163.0,62.0 L 148.0,67.2 L 132.9,69.8 L 117.9,69.8 L 104.7,69.8 L 89.7,69.8 L 76.5,69.8 L 61.4,69.8 L 48.3,67.2 L 33.2,64.6 L 20.0,62.0 L 10.6,56.9 Z"
-        fill="#e0e0e0" stroke="#fff" stroke-width="0.6"/>
-      <!-- Porto Santo -->
-      <ellipse cx="185" cy="5" rx="9" ry="3.5" fill="#d5d5d5" stroke="#fff" stroke-width="0.5"/>
-      <text x="185" y="6.2" text-anchor="middle" font-size="3" fill="#555" font-family="Arial">P. Santo</text>
-      <!-- Labels -->
-      <text id="lbl-MCN" x="100" y="21" text-anchor="middle" font-size="4.5" font-weight="bold" fill="#333" font-family="Arial">Costa Norte</text>
-      <text id="lbl-MRM" x="100" y="44" text-anchor="middle" font-size="4.5" font-weight="bold" fill="#333" font-family="Arial">R. Montanhosas</text>
-      <text id="lbl-MCS" x="98"  y="63" text-anchor="middle" font-size="4.5" font-weight="bold" fill="#333" font-family="Arial">Costa Sul</text>
+        d="M 62.6,39.7 L 69.7,45.0 L 76.8,47.7 L 83.9,50.3 L 91.0,53.0 L 98.1,55.7 L 105.2,58.3 L 112.3,61.0 L 119.4,63.7 L 126.5,63.7 L 133.5,63.7 L 140.6,63.7 L 147.7,63.7 L 154.8,66.3 L 161.9,69.0 L 169.0,69.0 L 176.1,69.0 L 183.2,63.7 L 190.3,58.3 L 197.4,55.7 L 204.5,53.0 L 208.1,55.7 L 201.0,58.3 L 193.9,63.7 L 186.8,74.3 L 179.7,74.3 L 172.6,77.0 L 165.5,77.0 L 158.4,77.0 L 151.3,77.0 L 144.2,74.3 L 137.1,74.3 L 130.0,71.7 L 122.9,71.7 L 115.8,69.0 L 108.7,69.0 L 101.6,66.3 L 94.5,61.0 L 87.4,58.3 L 80.3,55.7 L 73.2,50.3 L 66.1,42.3 Z"
+        fill="#ccc" stroke="#ccc" stroke-width="1.2" stroke-linejoin="round"/>
+
+      <!-- Agitação Marítima Sul -->
+      <path id="reg-AM-S"
+        d="M 41.3,31.7 L 48.4,31.7 L 55.5,37.0 L 62.6,47.7 L 69.7,53.0 L 76.8,58.3 L 83.9,61.0 L 91.0,66.3 L 98.1,69.0 L 105.2,71.7 L 112.3,74.3 L 119.4,74.3 L 126.5,74.3 L 133.5,77.0 L 140.6,77.0 L 147.7,79.7 L 154.8,79.7 L 161.9,79.7 L 169.0,79.7 L 176.1,79.7 L 183.2,79.7 L 190.3,69.0 L 197.4,63.7 L 204.5,61.0 L 211.6,55.7 L 218.7,50.3 L 225.8,53.0 L 218.7,55.7 L 211.6,61.0 L 204.5,66.3 L 197.4,77.0 L 190.3,79.7 L 183.2,82.3 L 176.1,82.3 L 169.0,82.3 L 161.9,82.3 L 154.8,82.3 L 147.7,82.3 L 140.6,82.3 L 133.5,82.3 L 126.5,82.3 L 119.4,82.3 L 112.3,82.3 L 105.2,77.0 L 98.1,74.3 L 91.0,71.7 L 83.9,66.3 L 76.8,63.7 L 69.7,61.0 L 62.6,53.0 L 55.5,47.7 L 48.4,42.3 L 41.3,34.3 Z"
+        fill="#ccc" stroke="#ccc" stroke-width="1.2" stroke-linejoin="round"/>
+
+      <!-- Contorno exterior fino -->
+      <path
+        d="M 48.4,18.3 L 55.5,13.0 L 69.7,7.7 L 83.9,7.7 L 91.0,10.3 L 98.1,18.3 L 112.3,21.0 L 126.5,23.7 L 133.5,23.7 L 140.6,21.0 L 154.8,21.0 L 169.0,23.7 L 183.2,31.7 L 197.4,37.0 L 211.6,39.7 L 225.8,42.3 L 229.4,45.0 L 229.4,47.7 L 218.7,50.3 L 208.1,50.3 L 197.4,63.7 L 190.3,79.7 L 183.2,82.3 L 169.0,82.3 L 147.7,82.3 L 119.4,82.3 L 105.2,77.0 L 91.0,71.7 L 76.8,63.7 L 62.6,53.0 L 48.4,42.3 L 41.3,34.3 L 41.3,31.7 L 48.4,18.3 Z"
+        fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="0.6"/>
+
     </svg>
   </div>
-  <div class="map-legend" id="legend"></div>
+  <div class="map-legend">
+    <div class="legend-row"><div class="legend-dot" id="dot-AM-N" style="background:#bbb"></div><span>Agit. Mar. Norte</span></div>
+    <div class="legend-row"><div class="legend-dot" id="dot-MCN"  style="background:#bbb"></div><span>Costa Norte</span></div>
+    <div class="legend-row"><div class="legend-dot" id="dot-MRM"  style="background:#bbb"></div><span>R. Montanhosas</span></div>
+    <div class="legend-row"><div class="legend-dot" id="dot-MCS"  style="background:#bbb"></div><span>Costa Sul</span></div>
+    <div class="legend-row"><div class="legend-dot" id="dot-AM-S" style="background:#bbb"></div><span>Agit. Mar. Sul</span></div>
+  </div>
   <div class="fonte">Fonte: IPMA</div>
 </a>
+
 <script>
-const REGIONS={MCN:'Costa Norte',MRM:'R. Montanhosas',MCS:'Costa Sul'};
-const LVL={red:4,orange:3,yellow:2,green:1};
-const COLORS={red:'#e53935',orange:'#ff8c00',yellow:'#fdd835',green:'#4caf50',none:'#e0e0e0'};
-const TEXT_COLOR={red:'#fff',orange:'#111',yellow:'#111',green:'#111',none:'#555'};
+const ALERT_COLORS={red:'#e53935',orange:'#ff8c00',yellow:'#fdd835',green:'#4caf50',none:'#ccc'};
+const LVL={red:4,orange:3,yellow:2,green:1,none:0};
+const IPMA_CODE={'AM-N':'MCN','MCN':'MCN','MRM':'MRM','MCS':'MCS','AM-S':'MCS'};
+const COASTAL='Coastal Event';
 
-function normLevel(l){return(l||'green').toLowerCase()}
+function normLevel(l){return(l||'none').toLowerCase()}
 
-function maxLevel(code,data){
+function maxLevel(ipmaCode, coastalOnly, data){
   let max='none';
   data.forEach(w=>{
-    if(w.idAreaAviso!==code)return;
+    if(w.idAreaAviso!==ipmaCode)return;
+    const isCoastal=(w.awarenessTypeName===COASTAL);
+    if(coastalOnly && !isCoastal)return;
+    if(!coastalOnly && isCoastal)return;
     const lv=normLevel(w.awarenessLevelID);
-    if(lv==='green'&&max==='none'){max='green';return;}
     if((LVL[lv]||0)>(LVL[max]||0))max=lv;
   });
   return max;
-}
-
-function buildLegend(levels){
-  document.getElementById('legend').innerHTML=Object.entries(REGIONS).map(([code,name])=>{
-    const color=COLORS[levels[code]]||COLORS.none;
-    return`<div class="legend-row"><div class="legend-dot" style="background:${color}"></div><span>${name}</span></div>`;
-  }).join('');
 }
 
 async function load(){
@@ -79,18 +101,22 @@ async function load(){
     const res=await fetch('https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json');
     if(!res.ok)throw new Error('HTTP '+res.status);
     const data=await res.json();
-    const levels={};
-    Object.keys(REGIONS).forEach(code=>{levels[code]=maxLevel(code,data);});
-    Object.entries(levels).forEach(([code,lv])=>{
-      const p=document.getElementById('reg-'+code);
-      const l=document.getElementById('lbl-'+code);
-      if(p)p.setAttribute('fill',COLORS[lv]||COLORS.none);
-      if(l)l.setAttribute('fill',TEXT_COLOR[lv]||'#333');
+
+    ['AM-N','MCN','MRM','MCS','AM-S'].forEach(reg=>{
+      const coastal=(reg==='AM-N'||reg==='AM-S');
+      const lv=maxLevel(IPMA_CODE[reg],coastal,data);
+      const color=ALERT_COLORS[lv]||ALERT_COLORS.none;
+      const path=document.getElementById('reg-'+reg);
+      const dot=document.getElementById('dot-'+reg);
+      if(path){path.setAttribute('fill',color);path.setAttribute('stroke',color);}
+      if(dot)dot.style.background=color;
     });
-    buildLegend(levels);
-    if(window.parent!==window)window.parent.postMessage({type:'resize',height:document.body.scrollHeight},'*');
+
+    if(window.parent!==window)
+      window.parent.postMessage({type:'resize',height:document.body.scrollHeight},'*');
   }catch(e){console.error(e);}
 }
+
 load();
 setInterval(load,10*60*1000);
 </script>
